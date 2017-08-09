@@ -3,8 +3,14 @@ var fs = require('fs');
 
 var server = http.createServer(function(req, res) {
     console.log('request was made: ' + req.url);
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('feed me popcorn');
+    if (req.url === '/home' || '/') {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        fs.createReadStream(__dirname + '/index.html').pipe(res);
+    } else if (req.url === '/contact') {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        fs.createReadStream(__dirname + '/contact.html').pipe(res);
+    }
+
 
 });
 
